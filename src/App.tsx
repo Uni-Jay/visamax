@@ -540,7 +540,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
                         <path d="M16 3c.6 3.4 2.7 5.4 5.9 5.8v3.1c-2.1.1-4-.5-5.9-1.7V16c0 3.1-2.5 5.5-5.6 5.5S4.8 19.1 4.8 16c0-3.1 2.5-5.6 5.6-5.6.3 0 .6 0 .9.1v3.4c-.3-.1-.6-.2-.9-.2-1.2 0-2.2.9-2.2 2.2 0 1.2 1 2.1 2.2 2.1s2.2-.9 2.2-2.1V3H16z" />
                       </svg>
                     </a>
-                    <span className="text-white/55">@visama_travels | @visa.max0</span>
+                    <span className="text-white/55">@visamax_travels | @visa.max0</span>
                   </span>
                 </p>
               </div>
