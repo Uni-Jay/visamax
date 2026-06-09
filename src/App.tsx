@@ -439,7 +439,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `rounded-full px-4 py-2 text-sm font-semibold transition ${isActive ? 'bg-white/15 text-white' : 'text-white hover:bg-white/10 hover:text-white'}`
+                  `rounded-full px-4 py-2 text-sm font-semibold !text-white transition ${isActive ? 'bg-white/15' : 'hover:bg-white/10'}`
                 }
               >
                 {item.label}
@@ -447,7 +447,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
             ))}
             <NavLink
               to="/book"
-              className="ml-2 inline-flex items-center rounded-full bg-[#c8102e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]"
+              className="ml-2 inline-flex items-center !text-white rounded-full bg-[#c8102e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]"
             >
               Book Now
             </NavLink>
@@ -588,10 +588,9 @@ function HomePage() {
             <div className="flex flex-col gap-4">
               <div className="grid grid-cols-2 overflow-hidden border border-white/10 bg-white/5 shadow-[0_16px_48px_rgba(0,0,0,0.18)]">
                 {[
-                  ['5,000+', 'Visas Processed'],
-                  ['10+', 'Years Experience'],
+                  ['1,000+', 'Visas Processed'],
                   ['50+', 'Countries Covered'],
-                  ['3,000+', 'Happy Clients'],
+                  ['500+', 'Happy Clients'],
                 ].map(([n, label]) => (
                   <div key={label} className="border-b border-r border-white/10 p-6">
                     <div className="text-3xl font-black leading-none text-white">{n}</div>
@@ -655,7 +654,7 @@ function HomePage() {
                 <div className="mt-8">
                   <NavLink
                     to="/about"
-                    className="inline-flex items-center rounded-full bg-[#002b6c] px-6 py-3 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#001a45]"
+                    className="inline-flex items-center rounded-full bg-[#002b6c] px-6 py-3 text-xs font-extrabold uppercase tracking-[0.1em] !text-white transition hover:bg-[#001a45]"
                   >
                     Read Full About Page
                   </NavLink>
@@ -1103,7 +1102,7 @@ function ServicesSection() {
           <div className="mt-6 flex flex-wrap gap-3">
             <NavLink
               to="/contact"
-              className="inline-flex items-center rounded-full bg-[#c8102e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]"
+              className="inline-flex items-center rounded-full bg-[#c8102e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] !text-white transition hover:bg-[#a30d26]"
             >
               Reach Out Now
             </NavLink>
@@ -1176,7 +1175,7 @@ function ReviewsSection() {
             href="https://wa.me/2348060886447?text=Hello%20VisaMax%20Travel%2C%20I%20want%20to%20share%20my%20review."
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center rounded-full bg-[#22c55e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#16a34a]"
+            className="inline-flex items-center rounded-full bg-[#22c55e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] !text-white transition hover:bg-[#16a34a]"
           >
             Share Review on WhatsApp
           </a>
