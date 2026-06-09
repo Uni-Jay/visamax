@@ -15,7 +15,7 @@ const SERVICES = [
 
 const SOCIALS = [
   { href: "https://facebook.com/visamaxtravel", label: "Facebook", d: "M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" },
-  { href: "https://instagram.com/visama_travels", label: "Instagram", isStroke: true },
+  { href: "https://instagram.com/visamax_travels", label: "Instagram", isStroke: true },
   { href: "https://www.tiktok.com/@visa.max0", label: "TikTok", d: "M16 3c.6 3.4 2.7 5.4 5.9 5.8v3.1c-2.1.1-4-.5-5.9-1.7V16c0 3.1-2.5 5.5-5.6 5.5S4.8 19.1 4.8 16c0-3.1 2.5-5.6 5.6-5.6.3 0 .6 0 .9.1v3.4c-.3-.1-.6-.2-.9-.2-1.2 0-2.2.9-2.2 2.2 0 1.2 1 2.1 2.2 2.1s2.2-.9 2.2-2.1V3h3.4z" },
   { href: "https://linkedin.com/company/visamaxtravel", label: "LinkedIn", isLinkedIn: true },
 ];
