@@ -82,7 +82,7 @@ export default function Footer() {
               </p>
               <p>
                 <strong>Email</strong>
-                <a href="mailto:info@visamaxtravel.com">info@visamaxtravel.com</a>
+                <a href="mailto:info@visamaxtravels.com">info@visamaxtravels.com</a>
               </p>
               <p>
                 <strong>Address</strong>

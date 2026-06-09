@@ -216,7 +216,7 @@ function getBotReply(input: string) {
   }
 
   if (text.includes('phone') || text.includes('call') || text.includes('whatsapp') || text.includes('contact')) {
-    return 'You can reach VisaMax on +234 817 002 0431 or +234 806 088 6447. Email: info@visamaxtravel.com.'
+    return 'You can reach VisaMax on +234 817 002 0431 or +234 806 088 6447. Email: info@visamaxtravels.com.'
   }
 
   if (text.includes('hour') || text.includes('open') || text.includes('time')) {
@@ -507,7 +507,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
                 </p>
                 <p className="flex flex-col gap-1">
                   <strong className="text-xs font-bold uppercase tracking-[0.08em] text-white">Email</strong>
-                  <a href="mailto:info@visamaxtravel.com" className="transition hover:text-white">info@visamaxtravel.com</a>
+                  <a href="mailto:info@visamaxtravels.com" className="transition hover:text-white">info@visamaxtravels.com</a>
                 </p>
                 <p className="flex flex-col gap-1">
                   <strong className="text-xs font-bold uppercase tracking-[0.08em] text-white">Address</strong>
@@ -1252,7 +1252,7 @@ function ContactSection() {
           <img src={logo} alt="VisaMax Travel Ltd logo" className="mb-8 w-full max-w-xl rounded-3xl border border-slate-200 p-4 shadow-[0_20px_50px_rgba(0,43,108,0.12)]" />
           <div className="space-y-5 text-slate-700">
             <p><strong className="text-[#002b6c]">Phone:</strong> +234 817 002 0431, +234 806 088 6447</p>
-            <p><strong className="text-[#002b6c]">Email:</strong> info@visamaxtravel.com</p>
+            <p><strong className="text-[#002b6c]">Email:</strong> info@visamaxtravels.com</p>
             <p><strong className="text-[#002b6c]">Working Days:</strong> Monday - Friday (9am-5pm)</p>
             <p><strong className="text-[#002b6c]">Address:</strong> 51, Ayangburen Road, Opposite Ayangburen Palace, Top Floor, Same building as KFC and Samsung office, Ikorodu, Lagos.</p>
             <button

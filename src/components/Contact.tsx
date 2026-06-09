@@ -4,7 +4,7 @@ import "./Contact.css";
 
 // ── Formspree email delivery ──────────────────────────────────────
 // 1. Visit https://formspree.io and create a free account.
-// 2. Create a new form, set destination to info@visamaxtravel.com
+// 2. Create a new form, set destination to info@visamaxtravels.com
 // 3. Copy your Form ID (e.g. "xpqgkjrz") and replace YOUR_FORM_ID below.
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
 
@@ -78,7 +78,7 @@ export default function Contact() {
               </div>
               <div>
                 <span className="contact__det-label">Email / Website</span>
-                <a href="mailto:info@visamaxtravel.com" className="contact__det-value">info@visamaxtravel.com</a>
+                <a href="mailto:info@visamaxtravels.com" className="contact__det-value">info@visamaxtravels.com</a>
                 <a href="http://www.visamaxtravel.com" target="_blank" rel="noopener noreferrer" className="contact__det-value">www.visamaxtravel.com</a>
               </div>
             </div>
