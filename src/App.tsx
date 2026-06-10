@@ -592,9 +592,19 @@ function PageShell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
         <div className="border-t border-white/10 py-4">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 text-xs text-white/35 sm:px-8 lg:px-12">
-            <p>Â© {new Date().getFullYear()} VisaMax Travel Ltd. All rights reserved.</p>
-            <p>/ visamaxtravel</p>
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 px-5 text-xs text-white/70 sm:px-8 lg:px-12">
+            <p>
+              &copy; 2026 BeadMax Design. All rights reserved. Website by{' '}
+              <a
+                href="https://www.kurios-sat.tech/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-white/80 transition hover:text-white"
+              >
+                Kurios Sat
+              </a>
+              .
+            </p>
           </div>
         </div>
       </footer>
