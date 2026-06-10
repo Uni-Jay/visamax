@@ -58,7 +58,7 @@ interface TeamMember {
 
 const team: TeamMember[] = [
   {
-    name: 'Mr. Ademola Adenusi',
+    name: 'Ademola Adenusi',
     role: 'Chief Executive Officer',
     phone: '+234 817 002 0431',
     bio: "Visionary leader driving Kurios Sat's mission to empower businesses and individuals through innovative technology solutions and strategic digital transformation.",
@@ -66,7 +66,7 @@ const team: TeamMember[] = [
     color: '#0F1E38',
   },
   {
-    name: 'Mrs. Adeyemi Adenusi',
+    name: 'Adeyemi Adenusi',
     role: 'Head of Human Resources',
     phone: '+234 811 592 4866',
     bio: 'As the Head of Human Resources at Visa Max, Mrs. Adeyemi Adenusi provides strategic leadership in talent acquisition, employee development, and organizational culture. With a focus on efficiency, professionalism, and staff empowerment, she ensures the organization attracts and retains top talent.',
@@ -75,7 +75,7 @@ const team: TeamMember[] = [
     image: adeyemiImg,
   },
   {
-    name: 'Miss Victoria Omodogbe',
+    name: 'Victoria Omodogbe',
     role: 'Head of Administration',
     phone: '+234 809 667 3814',
     bio: 'Supports the CEO in strategic planning, oversees administrative operations, and ensures smooth coordination across departments to drive organisational success.',
@@ -84,7 +84,7 @@ const team: TeamMember[] = [
     image: victoriaImg,
   },
   {
-    name: 'Miss Noah Christiana',
+    name: 'Noah Christiana',
     role: 'Head of Department',
     phone: '+234 903 679 9843',
     bio: 'Christianaserves as the Head of Department at Visa Max, overseeing departmental operations, team coordination, and service efficiency. Known for professionalism and strong leadership, she is committed to delivering excellent organizational support and client satisfaction',
@@ -421,11 +421,14 @@ function AiChatWidget() {
 }
 
 function PageShell({ children }: { children: React.ReactNode }) {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#001a45]/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-12">
-          <NavLink to="/" className="flex items-center gap-3">
+          {/* Logo */}
+          <NavLink to="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
             <img src={logo} alt="VisaMax Travel Ltd" className="h-12 w-12 rounded-xl object-cover shadow-lg shadow-[#c8102e]/20 ring-2 ring-white/20" />
             <div className="leading-none">
               <div className="text-lg font-black tracking-[-0.03em] text-white">VisaMax</div>
@@ -433,13 +436,14 @@ function PageShell({ children }: { children: React.ReactNode }) {
             </div>
           </NavLink>
 
+          {/* Desktop nav */}
           <nav className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `rounded-full px-4 py-2 text-sm font-semibold !text-white transition ${isActive ? 'bg-white/15' : 'hover:bg-white/10'}`
+                  `rounded-full px-4 py-2 text-sm font-semibold text-white transition ${isActive ? 'bg-white/15' : 'hover:bg-white/10'}`
                 }
               >
                 {item.label}
@@ -447,12 +451,52 @@ function PageShell({ children }: { children: React.ReactNode }) {
             ))}
             <NavLink
               to="/book"
-              className="ml-2 inline-flex items-center !text-white rounded-full bg-[#c8102e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]"
+              className="ml-2 inline-flex items-center rounded-full bg-[#c8102e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]"
             >
               Book Now
             </NavLink>
           </nav>
+
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-lg text-white transition hover:bg-white/10 md:hidden"
+          >
+            <span className={`block h-0.5 w-6 rounded-full bg-white transition-all duration-300 ${mobileOpen ? 'translate-y-2 rotate-45' : ''}`} />
+            <span className={`block h-0.5 w-6 rounded-full bg-white transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-0.5 w-6 rounded-full bg-white transition-all duration-300 ${mobileOpen ? '-translate-y-2 -rotate-45' : ''}`} />
+          </button>
         </div>
+
+        {/* Mobile dropdown menu */}
+        {mobileOpen && (
+          <div className="border-t border-white/10 bg-[#001a45] px-5 pb-5 pt-3 md:hidden">
+            <nav className="flex flex-col gap-1">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `rounded-lg px-4 py-3 text-sm font-semibold text-white transition ${isActive ? 'bg-white/15' : 'hover:bg-white/10'}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
+              <NavLink
+                to="/book"
+                onClick={() => setMobileOpen(false)}
+                className="mt-2 inline-flex items-center justify-center rounded-full bg-[#c8102e] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]"
+              >
+                Book Now
+              </NavLink>
+            </nav>
+          </div>
+        )}
       </header>
       {children}
       <footer className="bg-[#001a45] text-white">
