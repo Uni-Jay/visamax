@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls -la \"c:\\\\Users\\\\USER\\\\Desktop\\\\\" 2>&1)",
+      "Read(//c/Users/USER/**)",
+      "Bash(xargs grep -l \"approval\\\\|approve\")",
+      "Bash(node -e \"console.log\\(require\\('crypto'\\).randomBytes\\(24\\).toString\\('hex'\\)\\)\")",
+      "Bash(node server/index.js)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8787/api/health --max-time 3)",
+      "Bash(curl -s -o /tmp/resp1.json -w 'HTTP %{http_code}\\\\n' -X POST http://localhost:8787/api/jobs -H 'Content-Type: application/json' -d '{\"title\":\"Test Unauthorized\"}')",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /tmp/resp2.json -w 'HTTP %{http_code}\\\\n' -X POST http://localhost:8787/api/jobs -H 'Content-Type: application/json' -H 'Authorization: Bearer 524ff68204aa5a2cebba7e0d1a8068dc63042bbde411c54657f8091ad8558f89' -d '{ *)",
+      "Bash(curl -s http://localhost:8787/api/jobs?source=maxhub)",
+      "Bash(curl -s -o /tmp/resp4.json -w 'HTTP %{http_code}\\\\n' -X PUT http://localhost:8787/api/jobs/6gu9b98D4h3Ky8Lw -H 'Content-Type: application/json' -H 'Authorization: Bearer 524ff68204aa5a2cebba7e0d1a8068dc63042bbde411c54657f8091ad8558f89' -d '{\"status\":\"Closed\"}')",
+      "Bash(curl -s -o /tmp/resp5.json -w 'HTTP %{http_code}\\\\n' -X POST http://localhost:8787/api/admin/jobs -H 'Content-Type: application/json' -H 'x-admin-key: d53412b39678cb05dea4809ad8fe41e6a803e58c3911d774' -d '{ *)",
+      "Bash(curl -s http://localhost:8787/api/jobs?source=manual)",
+      "Bash(curl -s -o /tmp/resp7.json -w 'HTTP %{http_code}\\\\n' -X PATCH http://localhost:8787/api/admin/jobs/6gu9b98D4h3Ky8Lw -H 'Content-Type: application/json' -H 'x-admin-key: d53412b39678cb05dea4809ad8fe41e6a803e58c3911d774' -d '{\"status\":\"Filled\"}')",
+      "Bash(curl -s -o /tmp/resp8.json -w 'HTTP %{http_code}\\\\n' -X DELETE http://localhost:8787/api/admin/jobs/6gu9b98D4h3Ky8Lw -H 'x-admin-key: d53412b39678cb05dea4809ad8fe41e6a803e58c3911d774')",
+      "Bash(curl -s -o /dev/null -w 'HTTP %{http_code}\\\\n' -X DELETE http://localhost:8787/api/jobs/6gu9b98D4h3Ky8Lw -H 'Authorization: Bearer 524ff68204aa5a2cebba7e0d1a8068dc63042bbde411c54657f8091ad8558f89')",
+      "Bash(curl -s -o /dev/null -w 'HTTP %{http_code}\\\\n' -X DELETE http://localhost:8787/api/admin/jobs/__TRACKED_VAR__ -H 'x-admin-key: d53412b39678cb05dea4809ad8fe41e6a803e58c3911d774')",
+      "Bash(curl -s http://localhost:8787/api/jobs)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8787/api/health --max-time 2)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\USER\\Desktop\\MaxHub\\backend"
+    ]
+  }
+}

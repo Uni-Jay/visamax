@@ -5,6 +5,7 @@ import logo from './assets/images/visamax_logo.jpeg'
 import adeyemiImg from './assets/images/adeyemi.jpeg'
 import victoriaImg from './assets/images/victoria.jpeg'
 import christyImg from './assets/images/christy.jpeg'
+import heroVideo from './assets/video/visamax.mp4'
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -12,6 +13,7 @@ const navItems = [
   { label: 'Team', to: '/team' },
   { label: 'Reviews', to: '/reviews' },
   { label: 'Services', to: '/services' },
+  { label: 'Career', to: '/career' },
   { label: 'Contact', to: '/contact' },
 ]
 
@@ -136,6 +138,48 @@ const seedReviews: ReviewRecord[] = [
     rating: 5,
   },
 ]
+
+type JobRecord = {
+  id: string
+  source: 'manual' | 'maxhub'
+  externalRef: string | null
+  title: string
+  description: string
+  jobType: string
+  noOfPositions: number
+  location: string
+  salaryMin: number | null
+  salaryMax: number | null
+  currency: string
+  requiredExperience: string
+  qualifications: string
+  skills: string
+  benefits: string
+  postedDate?: string
+  closingDate?: string
+  status: 'Open' | 'Closed' | 'OnHold' | 'Filled'
+  createdAt?: string
+}
+
+const jobTypeOptions = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship']
+const jobStatusOptions = ['Open', 'Closed', 'OnHold', 'Filled']
+
+function formatSalary(job: JobRecord) {
+  if (!job.salaryMin && !job.salaryMax) {
+    return ''
+  }
+  const currency = job.currency || 'NGN'
+  if (job.salaryMin && job.salaryMax) {
+    return `${currency} ${job.salaryMin.toLocaleString()} - ${job.salaryMax.toLocaleString()}`
+  }
+  return `${currency} ${(job.salaryMin || job.salaryMax || 0).toLocaleString()}`
+}
+
+function openJobWhatsApp(job: JobRecord) {
+  const message = `Hello VisaMax Travel, I want to apply for: ${job.title}`
+  const whatsappUrl = `https://wa.me/2348060886447?text=${encodeURIComponent(message)}`
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+}
 
 type ChatRole = 'assistant' | 'user'
 
@@ -437,7 +481,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
           </NavLink>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-1 text-white md:flex">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
@@ -473,7 +517,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
 
         {/* Mobile dropdown menu */}
         {mobileOpen && (
-          <div className="border-t border-white/10 bg-[#001a45] px-5 pb-5 pt-3 md:hidden">
+          <div className="border-t border-white/10 bg-[#001a45] px-5 pb-5 pt-3 md:hidden text-white">
             <nav className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <NavLink
@@ -517,7 +561,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
 
             <div>
               <h4 className="mb-4 inline-block border-b-2 border-[#c8102e] pb-2 text-xs font-bold uppercase tracking-[0.14em] text-white">Quick Links</h4>
-              <ul className="space-y-3 text-sm text-white/90">
+              <ul className="space-y-3 text-sm text-white">
                 {navItems.map((item) => (
                   <li key={item.to}>
                     <NavLink to={item.to} className="transition hover:text-white">
@@ -613,13 +657,58 @@ function PageShell({ children }: { children: React.ReactNode }) {
 }
 
 function HomePage() {
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null)
+  const [heroMuted, setHeroMuted] = useState(true)
+
+  const toggleHeroSound = () => {
+    const video = heroVideoRef.current
+    if (!video) {
+      return
+    }
+    video.muted = !video.muted
+    setHeroMuted(video.muted)
+  }
+
   return (
     <PageShell>
       <main>
-        <section className="relative overflow-hidden bg-[linear-gradient(145deg,#001a45_0%,#002b6c_58%,#c8102e_140%)] text-white">
+        <section className="relative flex min-h-screen flex-col overflow-hidden bg-[linear-gradient(145deg,#001a45_0%,#002b6c_58%,#c8102e_140%)] text-white">
+          <video
+            ref={heroVideoRef}
+            className="absolute inset-0 h-full w-full object-cover"
+            src={heroVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[#001a45]/60" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_50%,rgba(21,101,192,0.28)_0%,transparent_42%),radial-gradient(circle_at_85%_15%,rgba(200,16,46,0.2)_0%,transparent_35%),radial-gradient(circle_at_70%_85%,rgba(21,101,192,0.18)_0%,transparent_40%)]" />
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:60px_60px]" />
-          <div className="relative mx-auto grid max-w-7xl gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-12 lg:py-28">
+
+          <button
+            type="button"
+            onClick={toggleHeroSound}
+            aria-label={heroMuted ? 'Unmute background video' : 'Mute background video'}
+            className="absolute bottom-6 right-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 sm:right-8 lg:right-12"
+          >
+            {heroMuted ? (
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <line x1="23" y1="9" x2="17" y2="15" />
+                <line x1="17" y1="9" x2="23" y2="15" />
+              </svg>
+            ) : (
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                <path d="M15.54 8.46a5 5 0 010 7.07" />
+                <path d="M19.07 4.93a10 10 0 010 14.14" />
+              </svg>
+            )}
+          </button>
+
+          <div className="relative z-10 mx-auto grid max-w-7xl flex-1 content-center gap-14 px-5 py-20 sm:px-8 lg:grid-cols-[1.1fr_0.9fr] lg:px-12 lg:py-28">
             <div>
               <span className="mb-6 inline-flex border border-[#c8102e]/25 bg-[#c8102e]/10 px-4 py-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#ff98a9]">
                 Nigeria&apos;s Trusted Travel Partner
@@ -992,6 +1081,130 @@ function ReviewsPage() {
   )
 }
 
+function JobCard({ job }: { job: JobRecord }) {
+  const salary = formatSalary(job)
+  return (
+    <article className="border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h3 className="text-lg font-black text-[#002b6c]">{job.title}</h3>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {job.jobType ? (
+              <span className="rounded-full bg-[#002b6c]/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#002b6c]">{job.jobType}</span>
+            ) : null}
+            {job.location ? (
+              <span className="rounded-full bg-[#c8102e]/10 px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.08em] text-[#c8102e]">{job.location}</span>
+            ) : null}
+          </div>
+        </div>
+        {salary ? <p className="text-sm font-bold text-slate-700">{salary}</p> : null}
+      </div>
+
+      {job.description ? <p className="mt-4 text-sm leading-7 text-slate-600">{job.description}</p> : null}
+      {job.qualifications ? (
+        <p className="mt-3 text-sm leading-6 text-slate-600"><strong className="text-[#002b6c]">Qualifications:</strong> {job.qualifications}</p>
+      ) : null}
+      {job.skills ? (
+        <p className="mt-2 text-sm leading-6 text-slate-600"><strong className="text-[#002b6c]">Skills:</strong> {job.skills}</p>
+      ) : null}
+
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
+        {job.closingDate ? (
+          <p className="text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+            Closes {new Date(job.closingDate).toLocaleDateString()}
+          </p>
+        ) : <span />}
+        <button
+          type="button"
+          onClick={() => openJobWhatsApp(job)}
+          className="inline-flex items-center rounded-full bg-[#22c55e] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#16a34a]"
+        >
+          Apply via WhatsApp
+        </button>
+      </div>
+    </article>
+  )
+}
+
+function JobSection({ title, emptyText, jobs, loading }: { title: string; emptyText: string; jobs: JobRecord[]; loading: boolean }) {
+  return (
+    <div>
+      <h2 className="text-2xl font-black tracking-[-0.02em] text-[#002b6c]">{title}</h2>
+      {loading ? (
+        <p className="mt-4 text-sm text-slate-500">Loading open positions&hellip;</p>
+      ) : jobs.length === 0 ? (
+        <p className="mt-4 text-sm leading-7 text-slate-600">{emptyText}</p>
+      ) : (
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {jobs.map((job) => <JobCard key={job.id} job={job} />)}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function CareerPage() {
+  const [manualJobs, setManualJobs] = useState<JobRecord[]>([])
+  const [maxhubJobs, setMaxhubJobs] = useState<JobRecord[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        const [manualRes, maxhubRes] = await Promise.all([
+          fetch('/api/jobs?source=manual'),
+          fetch('/api/jobs?source=maxhub'),
+        ])
+        if (manualRes.ok) {
+          setManualJobs((await manualRes.json()) as JobRecord[])
+        }
+        if (maxhubRes.ok) {
+          setMaxhubJobs((await maxhubRes.json()) as JobRecord[])
+        }
+      } catch {
+        // Keep empty lists if the API is unavailable.
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    void loadJobs()
+  }, [])
+
+  return (
+    <PageShell>
+      <main>
+        <section className="bg-[linear-gradient(145deg,#001a45_0%,#002b6c_58%,#c8102e_140%)] py-20 text-white">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+            <span className="mb-3 inline-block text-xs font-extrabold uppercase tracking-[0.16em] text-[#ff98a9]">Career</span>
+            <h1 className="max-w-3xl text-4xl font-black tracking-[-0.04em] sm:text-5xl">Work visa jobs abroad and careers at VisaMax.</h1>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-white/75">
+              Explore overseas job opportunities we source for clients, or join our own team at VisaMax Travel Ltd.
+            </p>
+          </div>
+        </section>
+
+        <section className="bg-[#f4f7fc] py-24">
+          <div className="mx-auto max-w-7xl space-y-16 px-5 sm:px-8 lg:px-12">
+            <JobSection
+              title="Work Visa Jobs Abroad"
+              emptyText="No overseas job openings right now — message us on WhatsApp to ask about upcoming opportunities."
+              jobs={manualJobs}
+              loading={loading}
+            />
+            <JobSection
+              title="Careers at VisaMax"
+              emptyText="No internal openings right now — check back soon or message us on WhatsApp."
+              jobs={maxhubJobs}
+              loading={loading}
+            />
+          </div>
+        </section>
+      </main>
+    </PageShell>
+  )
+}
+
 function AdminReviewsPage() {
   const [adminKey, setAdminKey] = useState('')
   const [statusFilter, setStatusFilter] = useState<'pending' | 'approved' | 'rejected' | 'all'>('pending')
@@ -1113,6 +1326,247 @@ function AdminReviewsPage() {
   )
 }
 
+const emptyJobForm = {
+  title: '',
+  description: '',
+  jobType: jobTypeOptions[0],
+  noOfPositions: 1,
+  location: '',
+  salaryMin: '',
+  salaryMax: '',
+  currency: 'NGN',
+  requiredExperience: '',
+  qualifications: '',
+  skills: '',
+  benefits: '',
+  postedDate: '',
+  closingDate: '',
+  status: 'Open',
+}
+
+function AdminJobsPage() {
+  const [adminKey, setAdminKey] = useState('')
+  const [statusFilter, setStatusFilter] = useState<'all' | 'Open' | 'Closed' | 'OnHold' | 'Filled'>('all')
+  const [jobs, setJobs] = useState<JobRecord[]>([])
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState(emptyJobForm)
+  const [creating, setCreating] = useState(false)
+
+  const loadJobs = async () => {
+    if (!adminKey.trim()) {
+      setError('Enter your admin key to load jobs.')
+      return
+    }
+
+    setError('')
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/admin/jobs?status=${statusFilter}`, {
+        headers: { 'x-admin-key': adminKey.trim() },
+      })
+
+      if (!response.ok) {
+        throw new Error('Could not load jobs. Check your admin key.')
+      }
+
+      const data = (await response.json()) as JobRecord[]
+      setJobs(data)
+    } catch (fetchError) {
+      const message = fetchError instanceof Error ? fetchError.message : 'Failed to load jobs.'
+      setError(message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const createJob = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!adminKey.trim()) {
+      setError('Enter your admin key first.')
+      return
+    }
+
+    setCreating(true)
+    setError('')
+    try {
+      const response = await fetch('/api/admin/jobs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': adminKey.trim(),
+        },
+        body: JSON.stringify({
+          ...form,
+          noOfPositions: Number(form.noOfPositions) || 1,
+          salaryMin: form.salaryMin ? Number(form.salaryMin) : undefined,
+          salaryMax: form.salaryMax ? Number(form.salaryMax) : undefined,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create job listing.')
+      }
+
+      const created = (await response.json()) as JobRecord
+      setJobs((current) => [created, ...current])
+      setForm(emptyJobForm)
+    } catch (createError) {
+      const message = createError instanceof Error ? createError.message : 'Failed to create job listing.'
+      setError(message)
+    } finally {
+      setCreating(false)
+    }
+  }
+
+  const updateJobStatus = async (id: string, status: JobRecord['status']) => {
+    try {
+      const response = await fetch(`/api/admin/jobs/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': adminKey.trim(),
+        },
+        body: JSON.stringify({ status }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update job status.')
+      }
+
+      setJobs((current) => current.map((job) => (job.id === id ? { ...job, status } : job)))
+    } catch (updateError) {
+      const message = updateError instanceof Error ? updateError.message : 'Failed to update job.'
+      setError(message)
+    }
+  }
+
+  const deleteJob = async (id: string) => {
+    try {
+      const response = await fetch(`/api/admin/jobs/${id}`, {
+        method: 'DELETE',
+        headers: { 'x-admin-key': adminKey.trim() },
+      })
+
+      if (!response.ok && response.status !== 204) {
+        throw new Error('Failed to delete job listing.')
+      }
+
+      setJobs((current) => current.filter((job) => job.id !== id))
+    } catch (deleteError) {
+      const message = deleteError instanceof Error ? deleteError.message : 'Failed to delete job.'
+      setError(message)
+    }
+  }
+
+  return (
+    <PageShell>
+      <main>
+        <section className="bg-[linear-gradient(145deg,#001a45_0%,#002b6c_58%,#c8102e_140%)] py-20 text-white">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+            <span className="mb-3 inline-block text-xs font-extrabold uppercase tracking-[0.16em] text-[#ff98a9]">Admin</span>
+            <h1 className="max-w-3xl text-4xl font-black tracking-[-0.04em] sm:text-5xl">Work Visa Jobs Admin Panel</h1>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-white/75">
+              Manage manually-uploaded work visa job listings shown under &quot;Work Visa Jobs Abroad&quot; on the Career page. Internal hiring postings synced from MaxHub ERP appear under &quot;Careers at VisaMax&quot; and are managed there, not here.
+            </p>
+          </div>
+        </section>
+
+        <section className="bg-[#f4f7fc] py-16">
+          <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+            <div className="mb-10 grid gap-3 md:grid-cols-[1fr_auto_auto]">
+              <input
+                type="password"
+                value={adminKey}
+                onChange={(event) => setAdminKey(event.target.value)}
+                placeholder="Enter admin key"
+                className="border border-slate-200 bg-white px-4 py-3 outline-none focus:border-[#002b6c]"
+              />
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}
+                className="border border-slate-200 bg-white px-4 py-3 outline-none focus:border-[#002b6c]"
+              >
+                <option value="all">All</option>
+                {jobStatusOptions.map((status) => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={loadJobs}
+                className="rounded bg-[#002b6c] px-5 py-3 text-xs font-extrabold uppercase tracking-[0.1em] text-white"
+              >
+                {loading ? 'Loading...' : 'Load'}
+              </button>
+            </div>
+
+            {error && <p className="mb-6 rounded border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-[#c8102e]">{error}</p>}
+
+            <div className="mb-12 bg-white p-6 shadow-sm sm:p-8">
+              <h2 className="mb-6 border-b-2 border-[#c8102e] pb-3 text-xl font-black text-[#002b6c]">Add a Work Visa Job</h2>
+              <form onSubmit={createJob} className="grid gap-4 md:grid-cols-2">
+                <input required value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c] md:col-span-2" placeholder="Job title *" />
+                <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="min-h-24 w-full border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c] md:col-span-2" placeholder="Description" />
+                <select value={form.jobType} onChange={(e) => setForm({ ...form, jobType: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]">
+                  {jobTypeOptions.map((type) => <option key={type} value={type}>{type}</option>)}
+                </select>
+                <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]" placeholder="Location (e.g. Canada)" />
+                <input type="number" min={1} value={form.noOfPositions} onChange={(e) => setForm({ ...form, noOfPositions: Number(e.target.value) })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]" placeholder="No. of positions" />
+                <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]">
+                  {jobStatusOptions.map((status) => <option key={status} value={status}>{status}</option>)}
+                </select>
+                <input value={form.salaryMin} onChange={(e) => setForm({ ...form, salaryMin: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]" placeholder="Salary min" />
+                <input value={form.salaryMax} onChange={(e) => setForm({ ...form, salaryMax: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]" placeholder="Salary max" />
+                <input value={form.currency} onChange={(e) => setForm({ ...form, currency: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]" placeholder="Currency (e.g. NGN, CAD)" />
+                <input value={form.requiredExperience} onChange={(e) => setForm({ ...form, requiredExperience: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]" placeholder="Required experience" />
+                <input value={form.qualifications} onChange={(e) => setForm({ ...form, qualifications: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c] md:col-span-2" placeholder="Qualifications" />
+                <input value={form.skills} onChange={(e) => setForm({ ...form, skills: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c] md:col-span-2" placeholder="Skills" />
+                <input value={form.benefits} onChange={(e) => setForm({ ...form, benefits: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c] md:col-span-2" placeholder="Benefits" />
+                <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  Posted date
+                  <input required type="date" value={form.postedDate} onChange={(e) => setForm({ ...form, postedDate: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 text-sm font-normal normal-case tracking-normal text-slate-900 outline-none focus:border-[#002b6c]" />
+                </label>
+                <label className="flex flex-col gap-1 text-xs font-semibold uppercase tracking-[0.08em] text-slate-500">
+                  Closing date
+                  <input required type="date" value={form.closingDate} onChange={(e) => setForm({ ...form, closingDate: e.target.value })} className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 text-sm font-normal normal-case tracking-normal text-slate-900 outline-none focus:border-[#002b6c]" />
+                </label>
+                <button disabled={creating} className="mt-2 inline-flex items-center justify-center rounded-full bg-[#c8102e] px-5 py-3.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26] disabled:opacity-60 md:col-span-2">
+                  {creating ? 'Adding…' : 'Add Job Listing'}
+                </button>
+              </form>
+            </div>
+
+            <div className="grid gap-4">
+              {jobs.map((job) => (
+                <article key={job.id} className="border border-slate-200 bg-white p-5">
+                  <p className="text-sm font-black text-[#002b6c]">{job.title}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[#c8102e]">{job.jobType} &middot; {job.location}</p>
+                  {job.description ? <p className="mt-3 text-sm leading-7 text-slate-700">{job.description}</p> : null}
+                  <p className="mt-3 text-xs font-semibold uppercase tracking-[0.1em] text-slate-500">Status: {job.status}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {jobStatusOptions.map((status) => (
+                      <button
+                        key={status}
+                        type="button"
+                        onClick={() => updateJobStatus(job.id, status as JobRecord['status'])}
+                        className={`rounded px-3 py-2 text-xs font-bold uppercase text-white ${status === job.status ? 'bg-slate-400' : 'bg-[#002b6c]'}`}
+                      >
+                        {status}
+                      </button>
+                    ))}
+                    <button type="button" onClick={() => deleteJob(job.id)} className="rounded bg-[#c8102e] px-3 py-2 text-xs font-bold uppercase text-white">Delete</button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+    </PageShell>
+  )
+}
+
 function ServicesSection() {
   return (
     <section className="bg-[#f4f7fc] py-24">
@@ -1165,6 +1619,12 @@ function ServicesSection() {
               className="inline-flex items-center rounded-full border border-[#002b6c]/20 bg-white px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-[#002b6c] transition hover:bg-[#002b6c] hover:text-white"
             >
               Book Consultation
+            </NavLink>
+            <NavLink
+              to="/career"
+              className="inline-flex items-center rounded-full border border-[#002b6c]/20 bg-white px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-[#002b6c] transition hover:bg-[#002b6c] hover:text-white"
+            >
+              View Open Positions
             </NavLink>
           </div>
         </div>
@@ -1521,6 +1981,8 @@ function App() {
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/admin/reviews" element={<AdminReviewsPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/career" element={<CareerPage />} />
+        <Route path="/admin/jobs" element={<AdminJobsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/book" element={<BookingPage />} />
       </Routes>
