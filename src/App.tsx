@@ -64,7 +64,7 @@ const team: TeamMember[] = [
     name: 'Ademola Adenusi',
     role: 'Chief Executive Officer',
     phone: '+234 817 002 0431',
-    bio: "Visionary leader driving Kurios Sat's mission to empower businesses and individuals through innovative technology solutions and strategic digital transformation.",
+    bio: 'As the Chief Executive Officer of Visa Max, Mr. Ademola Adenusi sets the vision and strategic direction of the company. With a commitment to integrity, excellence, and client satisfaction, he leads the team in delivering reliable visa, travel, and overseas study services that help individuals, families, and businesses reach their destinations with confidence.',
     initials: 'AA',
     color: '#0F1E38',
     image: ademolaImg,
