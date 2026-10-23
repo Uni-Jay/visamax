@@ -2,6 +2,7 @@
 import type { FormEvent } from 'react'
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import logo from './assets/images/visamax_logo.jpeg'
+import ademolaImg from './assets/images/ademola.jpg'
 import adeyemiImg from './assets/images/adeyemi.jpeg'
 import victoriaImg from './assets/images/victoria.jpeg'
 import christyImg from './assets/images/christy.jpeg'
@@ -66,6 +67,7 @@ const team: TeamMember[] = [
     bio: "Visionary leader driving Kurios Sat's mission to empower businesses and individuals through innovative technology solutions and strategic digital transformation.",
     initials: 'AA',
     color: '#0F1E38',
+    image: ademolaImg,
   },
   {
     name: 'Adeyemi Adenusi',
