@@ -1,0 +1,37 @@
+/* Careers (jobs from MaxHub). Set --mx-accent on a parent to match the brand. */
+.mx-careers { --mx-accent: var(--brand-accent, #1d3a8f); --mx-ink: #1f2430; --mx-muted: #5d6475; --mx-line: rgba(20, 24, 40, 0.12); max-width: 960px; margin: 0 auto; padding: 2.5rem 0 4rem; color: var(--mx-ink); font-family: inherit; }
+.mx-head { text-align: center; margin-bottom: 2rem; }
+.mx-head h1 { margin: 0.4rem 0 0.6rem; }
+.mx-head p { margin: 0 auto; max-width: 60ch; color: var(--mx-muted); line-height: 1.65; }
+.mx-eyebrow { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mx-accent) !important; }
+.mx-list { display: grid; gap: 0.9rem; }
+.mx-job { display: flex; justify-content: space-between; align-items: center; gap: 1.2rem; flex-wrap: wrap; background: #fff; border: 1px solid var(--mx-line); border-radius: 16px; padding: 1.15rem 1.3rem; box-shadow: 0 6px 20px rgba(20, 24, 40, 0.05); transition: transform 0.2s, box-shadow 0.2s; }
+.mx-job:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(20, 24, 40, 0.09); }
+.mx-job h3 { margin: 0 0 0.25rem; font-size: 1.12rem; color: var(--mx-ink); }
+.mx-meta { margin: 0; color: var(--mx-muted); font-size: 0.9rem; }
+.mx-pay { margin: 0.35rem 0 0; font-weight: 700; color: var(--mx-accent); font-size: 0.92rem; }
+.mx-job-side { text-align: right; }
+.mx-close { margin: 0 0 0.5rem; font-size: 0.8rem; color: var(--mx-muted); }
+.mx-btn { background: var(--mx-accent); color: #fff; border: 0; border-radius: 999px; padding: 0.65rem 1.25rem; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: inherit; }
+.mx-btn:hover { filter: brightness(1.08); }
+.mx-btn:disabled { opacity: 0.6; cursor: wait; }
+.mx-wide { width: 100%; padding: 0.85rem; margin-top: 0.4rem; }
+.mx-empty { text-align: center; color: var(--mx-muted); padding: 2rem 1rem; background: #fff; border: 1px dashed var(--mx-line); border-radius: 16px; }
+.mx-skeleton { height: 86px; background: linear-gradient(90deg, #f1f2f5, #f8f9fb, #f1f2f5); background-size: 200% 100%; animation: mx-shine 1.2s infinite; }
+@keyframes mx-shine { to { background-position: -200% 0; } }
+.mx-overlay { position: fixed; inset: 0; z-index: 1000; background: rgba(10, 12, 20, 0.55); display: flex; align-items: flex-start; justify-content: center; padding: 4vh 1rem; overflow-y: auto; }
+.mx-modal { position: relative; width: 100%; max-width: 640px; background: #fff; color: var(--mx-ink); border-radius: 20px; padding: 1.8rem; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3); }
+.mx-modal h2 { margin: 0 2rem 0.3rem 0; color: var(--mx-ink); }
+.mx-modal h4 { margin: 1.2rem 0 0.4rem; font-size: 0.95rem; color: var(--mx-ink); }
+.mx-modal ul { margin: 0; padding-left: 1.2rem; color: var(--mx-muted); line-height: 1.7; }
+.mx-desc { color: var(--mx-muted); line-height: 1.7; white-space: pre-line; }
+.mx-x { position: absolute; top: 0.9rem; right: 1rem; border: 0; background: transparent; font-size: 1.8rem; line-height: 1; cursor: pointer; color: var(--mx-muted); }
+.mx-form { margin-top: 1.2rem; border-top: 1px solid var(--mx-line); padding-top: 0.4rem; display: grid; gap: 0.7rem; }
+.mx-form label { display: grid; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: var(--mx-ink); }
+.mx-form input, .mx-form textarea { font: inherit; font-weight: 400; padding: 0.7rem 0.85rem; border: 1px solid var(--mx-line); border-radius: 10px; background: #fff; color: var(--mx-ink); }
+.mx-form input:focus, .mx-form textarea:focus { outline: 2px solid color-mix(in srgb, var(--mx-accent) 35%, transparent); border-color: var(--mx-accent); }
+.mx-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+.mx-error { color: #b42318; background: #fef3f2; border-radius: 10px; padding: 0.6rem 0.8rem; margin: 0; font-size: 0.9rem; }
+.mx-sent { margin-top: 1.2rem; background: #ecfdf3; color: #05603a; border-radius: 14px; padding: 1rem 1.2rem; }
+.mx-sent p { margin: 0.3rem 0 0; }
+@media (max-width: 640px) { .mx-row { grid-template-columns: 1fr; } .mx-job-side { text-align: left; } .mx-modal { padding: 1.3rem; } }

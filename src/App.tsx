@@ -7,6 +7,7 @@ import adeyemiImg from './assets/images/adeyemi.jpeg'
 import victoriaImg from './assets/images/victoria.jpeg'
 import christyImg from './assets/images/christy.jpeg'
 import heroVideo from './assets/video/visamax.mp4'
+import MaxHubCareers from './components/Careers'
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -1147,21 +1148,15 @@ function JobSection({ title, emptyText, jobs, loading }: { title: string; emptyT
 
 function CareerPage() {
   const [manualJobs, setManualJobs] = useState<JobRecord[]>([])
-  const [maxhubJobs, setMaxhubJobs] = useState<JobRecord[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const loadJobs = async () => {
       try {
-        const [manualRes, maxhubRes] = await Promise.all([
-          fetch('/api/jobs?source=manual'),
-          fetch('/api/jobs?source=maxhub'),
-        ])
+        // Internal openings come live from MaxHub (see MaxHubCareers below).
+        const manualRes = await fetch('/api/jobs?source=manual')
         if (manualRes.ok) {
           setManualJobs((await manualRes.json()) as JobRecord[])
-        }
-        if (maxhubRes.ok) {
-          setMaxhubJobs((await maxhubRes.json()) as JobRecord[])
         }
       } catch {
         // Keep empty lists if the API is unavailable.
@@ -1194,12 +1189,13 @@ function CareerPage() {
               jobs={manualJobs}
               loading={loading}
             />
-            <JobSection
-              title="Careers at VisaMax"
-              emptyText="No internal openings right now — check back soon or message us on WhatsApp."
-              jobs={maxhubJobs}
-              loading={loading}
-            />
+            <div id="careers" style={{ ['--brand-accent' as string]: '#002b6c' }}>
+              <MaxHubCareers
+                brand="VM"
+                title="Careers at VisaMax"
+                intro="Join our travel team — consultants, visa officers, customer care and more. Apply here and our HR team will get back to you."
+              />
+            </div>
           </div>
         </section>
       </main>
