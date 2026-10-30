@@ -8,6 +8,7 @@ import victoriaImg from './assets/images/victoria.jpeg'
 import christyImg from './assets/images/christy.jpeg'
 import heroVideo from './assets/video/visamax.mp4'
 import MaxHubCareers from './components/Careers'
+import BookingForm from './components/BookingForm'
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -41,14 +42,6 @@ const consultationTypes = [
   'General Travel Consultation',
 ]
 
-const slotOptions = [
-  '09:00 AM',
-  '10:30 AM',
-  '12:00 PM',
-  '02:00 PM',
-  '03:30 PM',
-  '05:00 PM',
-]
 
 interface TeamMember {
   name: string
@@ -1833,22 +1826,6 @@ function ContactPage() {
 }
 
 function BookingPage() {
-  const [submitted, setSubmitted] = useState(false)
-  const [form, setForm] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    service: consultationTypes[0],
-    date: '',
-    time: slotOptions[0],
-    notes: '',
-  })
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setSubmitted(true)
-  }
-
   return (
     <PageShell>
       <main>
@@ -1857,7 +1834,7 @@ function BookingPage() {
             <span className="mb-3 inline-block text-xs font-extrabold uppercase tracking-[0.16em] text-[#ff98a9]">Appointment Booking</span>
             <h1 className="max-w-3xl text-4xl font-black tracking-[-0.04em] sm:text-5xl">Book your office consultation with VisaMax.</h1>
             <p className="mt-4 max-w-2xl text-lg leading-8 text-white/75">
-              Pick your service, preferred date and time slot for an in-office meeting with our consultants. Our team will confirm your appointment via phone or email.
+              Pick a service and a free time — at our office, by video or by phone. You get an instant email confirmation and a reminder the day before.
             </p>
           </div>
         </section>
@@ -1868,99 +1845,15 @@ function BookingPage() {
               <img src={logo} alt="VisaMax Travel Ltd logo" className="mb-8 w-full max-w-xl rounded-3xl border border-slate-200 p-4 shadow-[0_20px_50px_rgba(0,43,108,0.12)]" />
               <div className="space-y-4 text-slate-700">
                 <h2 className="text-2xl font-black tracking-[-0.02em] text-[#002b6c]">What Happens Next?</h2>
-                <p className="leading-7">1. Submit your preferred office consultation details.</p>
-                <p className="leading-7">2. We review availability and contact you to confirm.</p>
-                <p className="leading-7">3. Visit our office to meet our consultants and receive guidance on the next required documents.</p>
+                <p className="leading-7">1. Choose your service, a day and a free time.</p>
+                <p className="leading-7">2. Your booking is confirmed instantly by email — with a link to cancel or rebook.</p>
+                <p className="leading-7">3. Meet your consultant and get clear guidance on the documents you need next.</p>
                 <p className="pt-2 text-sm text-slate-600">For urgent requests, call +234 817 002 0431.</p>
               </div>
             </div>
 
-            <div className="bg-white p-6 shadow-[0_4px_20px_rgba(0,43,108,0.12)] sm:p-10">
-              {submitted ? (
-                <div className="rounded-2xl border border-[#c8102e]/20 bg-[#fff5f7] p-6 text-center">
-                  <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#c8102e]">Appointment Request Sent</p>
-                  <h2 className="mt-2 text-2xl font-black text-[#002b6c]">Thank you, {form.fullName || 'Client'}.</h2>
-                  <p className="mt-3 text-slate-700">
-                    Your request for <strong>{form.service}</strong> on <strong>{form.date || 'your selected date'}</strong> at <strong>{form.time}</strong> has been received.
-                  </p>
-                  <p className="mt-2 text-sm text-slate-600">A VisaMax representative will contact you shortly to confirm your office appointment.</p>
-                  <button
-                    type="button"
-                    onClick={() => setSubmitted(false)}
-                    className="mt-5 inline-flex items-center rounded-full bg-[#002b6c] px-5 py-2.5 text-xs font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#001a45]"
-                  >
-                    Book Another
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={onSubmit} className="space-y-4">
-                  <h2 className="mb-2 border-b-2 border-[#c8102e] pb-3 text-2xl font-black text-[#002b6c]">Consultation Details</h2>
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <input
-                      required
-                      value={form.fullName}
-                      onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                      className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                      placeholder="Full Name"
-                    />
-                    <input
-                      required
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                      placeholder="Phone Number"
-                    />
-                    <input
-                      required
-                      type="email"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                      placeholder="Email Address"
-                    />
-                    <select
-                      value={form.service}
-                      onChange={(e) => setForm({ ...form, service: e.target.value })}
-                      className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                    >
-                      {consultationTypes.map((item) => (
-                        <option key={item}>{item}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <input
-                      required
-                      type="date"
-                      value={form.date}
-                      onChange={(e) => setForm({ ...form, date: e.target.value })}
-                      className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                    />
-                    <select
-                      value={form.time}
-                      onChange={(e) => setForm({ ...form, time: e.target.value })}
-                      className="border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                    >
-                      {slotOptions.map((slot) => (
-                        <option key={slot}>{slot}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <textarea
-                    value={form.notes}
-                    onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                    className="min-h-32 w-full border border-slate-200 bg-[#f4f7fc] px-4 py-3 outline-none focus:border-[#002b6c]"
-                    placeholder="Tell us your travel plan, destination, and any deadlines for your office consultation..."
-                  />
-
-                  <button className="inline-flex w-full items-center justify-center rounded-full bg-[#c8102e] px-5 py-4 text-sm font-extrabold uppercase tracking-[0.1em] text-white transition hover:bg-[#a30d26]">
-                    Confirm Appointment Request
-                  </button>
-                </form>
-              )}
+            <div className="min-w-0 bg-white p-6 shadow-[0_4px_20px_rgba(0,43,108,0.12)] sm:p-10">
+              <BookingForm fallbackServices={consultationTypes} />
             </div>
           </div>
         </section>
